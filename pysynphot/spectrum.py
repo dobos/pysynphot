@@ -7,6 +7,7 @@ It also pre-loads the built-in :ref:`pysynphot-vega-spec` spectrum to
 """
 from __future__ import absolute_import, division, print_function
 
+import logging
 import re
 import os
 import math
@@ -258,7 +259,7 @@ class Integrator(object):
         if ((not self.fluxunits.isMag) and (self._fluxtable.min() < 0)):
             idx = N.where(self._fluxtable < 0)
             self._fluxtable[idx] = 0.0
-            print("Warning, %d of %d bins contained negative fluxes; they "
+            logging.warning("Warning, %d of %d bins contained negative fluxes; they "
                   "have been set to zero." % (
                       len(idx[0]), len(self._fluxtable)))
 
@@ -766,7 +767,7 @@ class SourceSpectrum(Integrator):
 
     def effstim(self, fluxunits='photlam'):
         """Not implemented."""
-        print("?? %s" % fluxunits)
+        logging.info("?? %s" % fluxunits)
         raise NotImplementedError(
             "Ticket #140: calcphot.effstim functionality")
 
@@ -1754,7 +1755,7 @@ class SpectralElement(Integrator):
             return CompositeSpectralElement(self, UniformTransmission(other))
 
         else:
-            print("SpectralElements can only be multiplied by other " +
+            logging.warning("SpectralElements can only be multiplied by other " +
                   "SpectralElements or SourceSpectrum objects")
 
     def __rmul__(self, other):

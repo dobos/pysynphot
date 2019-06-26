@@ -4,6 +4,7 @@ They are discussed in detail in :ref:`pysynphot-appendixc`.
 """
 from __future__ import division, print_function
 
+import logging
 import numpy as N
 from astropy.io import fits as pyfits
 
@@ -190,7 +191,7 @@ class GraphTable(object):
         count = 0
         while outnode >= 0:
             if (DEBUG and (outnode < 0)):
-                print("outnode == %d: stop condition"%outnode)
+                logging.info("outnode == %d: stop condition"%outnode)
 
             previous_outnode = outnode
 
@@ -199,7 +200,7 @@ class GraphTable(object):
             # If there are no entries with this innode, we're done
             if nodes[0].size == 0:
                 if DEBUG:
-                    print("no such innode %d: stop condition"%innode)
+                    logging.info("no such innode %d: stop condition"%innode)
                 #return (components,thcomponents)
                 break
 
@@ -235,7 +236,7 @@ class GraphTable(object):
                     used_default=False
 
             if DEBUG:
-                print("Innode %d  Outnode %d  Compname %s"%(innode, outnode, component))
+                logging.info("Innode %d  Outnode %d  Compname %s"%(innode, outnode, component))
             components.append(component)
             thcomponents.append(thcomponent)
 
@@ -244,16 +245,16 @@ class GraphTable(object):
 
             if outnode == previous_outnode:
                 if DEBUG:
-                    print("Innode: %d  Outnode:%d  Used default: %s"%(innode, outnode,used_default))
+                    logging.info("Innode: %d  Outnode:%d  Used default: %s"%(innode, outnode,used_default))
                 count += 1
                 if count > 3:
                     if DEBUG:
-                        print("same outnode %d > 3 times: stop condition"%outnode)
+                        logging.info("same outnode %d > 3 times: stop condition"%outnode)
                     break
 
         if (outnode < 0):
             if DEBUG:
-                print("outnode == %d: stop condition"%outnode)
+                logging.info("outnode == %d: stop condition"%outnode)
             raise ValueError("Incomplete obsmode %s"%str(modes))
 
 

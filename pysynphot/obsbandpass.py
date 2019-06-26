@@ -1,6 +1,7 @@
 """This module handle bandpass of observation modes."""
 from __future__ import division, print_function
 import numpy as np
+import logging
 
 from .observationmode import ObservationMode
 from .spectrum import CompositeSpectralElement, TabularSpectralElement
@@ -146,7 +147,7 @@ class ObsModeBandpass(CompositeSpectralElement):
     def _checkbounds(self):
         thru=self.throughput
         if thru[0] != 0 or thru[-1] != 0:
-            print("Warning: throughput for this obsmode is not bounded by zeros. Endpoints: thru[0]=%g, thru[-1]=%g"%(thru[0],thru[-1]))
+            logging.warning("Warning: throughput for this obsmode is not bounded by zeros. Endpoints: thru[0]=%g, thru[-1]=%g"%(thru[0],thru[-1]))
 
     def thermback(self):
         """Calculate thermal background count rate for ``self.obsmode``.

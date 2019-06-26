@@ -4,6 +4,7 @@
 """This module handles an observation and related calculations."""
 from __future__ import division
 
+import logging
 import numpy as np
 import math
 
@@ -272,11 +273,11 @@ class Observation(spectrum.CompositeSourceSpectrum):
                 self.binwave = self.bandpass.binset
             except (KeyError, AttributeError):
                 self.binwave = self.spectrum.wave
-                print(msg)
+                logging.warning(msg)
 
             if self.binwave is None:
                 self.binwave = self.spectrum.wave
-                print(msg)
+                logging.warning(msg)
         else:
             self.binwave=binset
 

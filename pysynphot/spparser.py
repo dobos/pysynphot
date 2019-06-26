@@ -18,6 +18,7 @@ In class Interpreter, the docstring of every function named with p\_
 is part of the instructions to the parser.
 """
 from __future__ import absolute_import, division, print_function
+import logging
 from .spark import GenericScanner, GenericASTBuilder, GenericASTMatcher
 from . import spectrum
 from . import reddening
@@ -248,7 +249,7 @@ class Interpreter(GenericASTMatcher):
             args = tree[2].value
         fname = tree[0].value
         if fname not in syfunctions:
-            print("Error: unknown function:", fname)
+            logging.error("Error: unknown function:", fname)
             self.error(fname)
         else:
             if fname == 'unit':
@@ -260,7 +261,7 @@ class Interpreter(GenericASTMatcher):
             elif fname == 'pl':
                 # power law
                 if args[2] not in synforms:
-                    print("Error: unrecognized units:", args[2])
+                    logging.error("Error: unrecognized units:", args[2])
                 # code to create powerlaw spectrum object
                 tree.value = spectrum.Powerlaw(args[0],args[1],fluxunits=args[2])
             elif fname == 'box':

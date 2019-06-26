@@ -4,6 +4,7 @@ http://stackoverflow.com/questions/844505/is-a-graph-library-eg-networkx-the-rig
 """
 from __future__ import division, print_function
 
+import logging
 from collections import defaultdict
 from astropy.io import fits as pyfits
 
@@ -78,10 +79,10 @@ class GraphTable(object):
         self.inittab()
 
         if self.problemset:
-           print("warning, ambiguous nodes encountered")
-           print("(innode, kwd, (outnode, compname, thcompname)")
+           logging.warning("warning, ambiguous nodes encountered")
+           logging.warning("(innode, kwd, (outnode, compname, thcompname)")
            for k in self.problemset:
-               print(k)
+               logging.info(k)
 
         self.all_nodes = set()
         for node in self.tab:
@@ -113,7 +114,7 @@ class GraphTable(object):
                 try:
                     row = line.split()
                 except ValueError as e:
-                    print("Error parsine line %s"%line)
+                    logging.error("Error parsine line %s"%line)
                     raise e
                 self._setrow(row)
             f.close()
@@ -166,8 +167,8 @@ class GraphTable(object):
         #Returns a list of keywords and a dict of paramkeys
         kws, paramdict = extract_keywords(icss)
         if verbose:
-            print(kws)
-            print(paramdict)
+            logging.info(kws)
+            logging.info(paramdict)
         #Always start with innode=1
         nextnode = 1
 
@@ -180,7 +181,7 @@ class GraphTable(object):
 
 
             if found:
-                if verbose: print(found)
+                if verbose: logging.info(found)
                 #...and that we don't have ambiguity
                 if len(found) == 1:
                     used.update(found)
@@ -207,7 +208,7 @@ class GraphTable(object):
                 paramcomp[tcomp]=float(paramdict[matchkey])
 
 
-            if verbose: print(matchnode)
+            if verbose: logging.info(matchnode)
 
             if nextnode is None:
                 raise ValueError("Incomplete obsmode: legal possibilities %s"%str(list(othernodes.keys())))

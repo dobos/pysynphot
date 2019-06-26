@@ -22,6 +22,7 @@ from __future__ import division, print_function
 from __future__ import print_function
 __version__ = 'SPARK-0.6.1'
 
+import logging
 import re
 
 def _namelist(instance):
@@ -60,7 +61,7 @@ class GenericScanner(object):
                 return '|'.join(rv)
 
         def error(self, s, pos):
-                print("Lexical error at position %s" % pos)
+                logging.error("Lexical error at position %s" % pos)
                 raise SystemExit
 
         def tokenize(self, s):

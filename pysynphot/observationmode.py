@@ -14,6 +14,7 @@
 """
 from __future__ import absolute_import, division, print_function
 
+import logging
 import glob
 import re
 import os
@@ -138,7 +139,7 @@ class BaseObservationMode(object):
             pass
         except ValueError as e:
             #wavetable will raise a ValueError if the key was ambiguous
-            print("Warning, %s"%str(e))
+            logging.warning("Warning, %s"%str(e))
 
     def __str__(self):
         return self._obsmode
